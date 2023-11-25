@@ -100,7 +100,8 @@ public class ControlPanel extends JPanel {
             }else{
                 faster.setEnabled(false);
             }
-            GameFrame.speed.setText("speed: "+MainPanel.viewSpeed);
+            if (GameFrame.jcb.getSelectedIndex() == 1) GameFrame.speed.setText("speed: " + MainPanel.speed);
+            if (GameFrame.jcb.getSelectedIndex() == 0) GameFrame.speed.setText("speed: " + MainPanel.viewSpeed);
         }
     }
     static class slowerListener implements ActionListener{
@@ -111,7 +112,8 @@ public class ControlPanel extends JPanel {
             if(!faster.isEnabled()) {
                 faster.setEnabled(true);
             }
-            GameFrame.speed.setText("speed: "+MainPanel.viewSpeed);
+            if (GameFrame.jcb.getSelectedIndex() == 1) GameFrame.speed.setText("speed: " + MainPanel.speed);
+            if (GameFrame.jcb.getSelectedIndex() == 0) GameFrame.speed.setText("speed: " + MainPanel.viewSpeed);
 
         }
     }

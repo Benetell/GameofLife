@@ -1,6 +1,8 @@
 
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -21,6 +23,7 @@ public class GameFrame extends JFrame{
     public static JTextField bs = new JTextField("B/S rate",15);
 
     public static JTextPane speed = new JTextPane();
+    public static JComboBox jcb;
 
 
     public GameFrame(ArrayList<ArrayList<cell>> _mx){
@@ -48,8 +51,19 @@ public class GameFrame extends JFrame{
         main = new MainPanel(mx);
 
         info.setLayout(new BorderLayout());
+        String[] choices = {"speed","sleep"};
+        jcb = new JComboBox(choices);
+        jcb.addActionListener(e -> {
+            if(e.getSource()==jcb) {
+                if (jcb.getSelectedIndex() == 1) speed.setText("speed: " + MainPanel.speed);
+                if (jcb.getSelectedIndex() == 0) speed.setText("speed: " + MainPanel.viewSpeed);
+            }
+        });
         info.add(bs,BorderLayout.WEST);
-        info.add(speed, BorderLayout.EAST);
+        info.add(speed, BorderLayout.CENTER);
+        info.add(jcb, BorderLayout.EAST);
+
+
         control.setLayout(new GridLayout(2,2));
         main.setLayout(new BorderLayout());
         main.add(info,BorderLayout.NORTH);
@@ -59,6 +73,7 @@ public class GameFrame extends JFrame{
         this.setVisible(true);
     }
     public void start(){
+
         main.startThread();
     }
 
