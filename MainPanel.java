@@ -37,9 +37,9 @@ public class MainPanel extends JPanel implements Runnable{
                     random = 0;
                 }
             }
-            InfoPanel.bs.setEnabled(true);
+            GameFrame.bs.setEnabled(true);
             if(running == 1) {
-                InfoPanel.bs.setEnabled(false);
+                GameFrame.bs.setEnabled(false);
                 GamePanel.createMX(GameFrame.pastmx);
                 for(int row = 0; row<GamePanel.SIZE; row++){
                     for(int col = 0; col<GamePanel.SIZE; col++){

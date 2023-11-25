@@ -61,7 +61,7 @@ public class ControlPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String text = InfoPanel.bs.getText();
+            String text = GameFrame.bs.getText();
             System.out.println(text);
             if(text.equals( "B/S rate")) return;
             MainPanel.b.clear();
@@ -100,7 +100,7 @@ public class ControlPanel extends JPanel {
             }else{
                 faster.setEnabled(false);
             }
-            InfoPanel.speed.setText("speed: "+MainPanel.viewSpeed);
+            GameFrame.speed.setText("speed: "+MainPanel.viewSpeed);
         }
     }
     static class slowerListener implements ActionListener{
@@ -111,7 +111,7 @@ public class ControlPanel extends JPanel {
             if(!faster.isEnabled()) {
                 faster.setEnabled(true);
             }
-            InfoPanel.speed.setText("speed: "+MainPanel.viewSpeed);
+            GameFrame.speed.setText("speed: "+MainPanel.viewSpeed);
 
         }
     }
