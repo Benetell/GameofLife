@@ -8,10 +8,15 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
-
+/*
+   ez az osztaly valósítja meg a játék Jpanelét, benne a mátrixal
+ */
 public class GamePanel extends JPanel{
 
     public static int SIZE = 30;
+    /*
+    létrehozza a cell mátrixot és megjelníti
+     */
     GamePanel(ArrayList<ArrayList<cell>> mx){
         createMX(mx);
         for(int i = 0; i<SIZE; i++) {
@@ -21,6 +26,9 @@ public class GamePanel extends JPanel{
         this.setLayout(new GridLayout(SIZE,SIZE,0,0));
         this.setBorder(new TitledBorder("GamePanel"));
     }
+    /*
+    inicializálja a paraméteréül kapott mátrixot és annak gombjait
+     */
     static public void createMX(ArrayList<ArrayList<cell>> mx){
         for(int i = 0; i<SIZE; i++) {
             mx.add(i, new ArrayList<>());
@@ -31,9 +39,8 @@ public class GamePanel extends JPanel{
         }
     }
     /*
-     * a cell kattintásra dob egy "e" ActionEvenet-et, amit a getSource visszafejt.
-     * ekkor kiíródik a megnyomott gomb
-     */
+     a cell kattintásra dob egy "e" ActionEvenet-et, amit a getSource viszafejt, a gombnyomás így a 0 és 1 közti állapotát váltja a cellnek
+    */
     static class CellPressed implements ActionListener{
             public void actionPerformed(ActionEvent e) {
                 cell clickedButton = (cell) e.getSource();
