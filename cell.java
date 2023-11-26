@@ -48,18 +48,6 @@ public class cell extends JButton {
         }
     }
     /*
-    row változó gettere debug célokra
-     */
-    public int getRow() {
-        return row;
-    }
-    /*
-    col változó gettere debug célokra
-     */
-    public int getCol() {
-        return col;
-    }
-    /*
     visszaadja a cella jelenlegi állapotát
      */
     public int aliveStatus() {

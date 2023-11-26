@@ -1,11 +1,7 @@
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.Serial;
 import java.util.ArrayList;
-
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 /*
@@ -14,14 +10,16 @@ import javax.swing.border.TitledBorder;
 public class GamePanel extends JPanel{
 
     public static int SIZE = 30;
+    static ArrayList<ArrayList<cell>> mx = new ArrayList<>();
     /*
-    létrehozza a cell mátrixot és megjelníti
+    létrehozza a cell mátrixot és megjeleníti
      */
-    GamePanel(ArrayList<ArrayList<cell>> mx){
-        createMX(mx);
+    GamePanel(ArrayList<ArrayList<cell>> _mx){
+        mx = _mx;
+        createMX(_mx);
         for(int i = 0; i<SIZE; i++) {
             for(int k = 0; k<SIZE; k++) {
-                this.add(mx.get(i).get(k));
+                this.add(_mx.get(i).get(k));
             }}
         this.setLayout(new GridLayout(SIZE,SIZE,0,0));
         this.setBorder(new TitledBorder("GamePanel"));
@@ -48,5 +46,5 @@ public class GamePanel extends JPanel{
                 else clickedButton.setAlive(0);
             }
 
-        }
+    }
 }

@@ -9,7 +9,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 /*
@@ -19,16 +18,21 @@ public class ControlPanel extends JPanel {
     static Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
     static ArrayList<ArrayList<cell>> mx;
+
     public static JButton faster = new JButton("faster");
+    public static JButton bs= new JButton("set bs");
+    public static JButton start = new JButton("start");
+
+    public static JButton stop = new JButton("stop");
+
     public ControlPanel(ArrayList<ArrayList<cell>> _mx) {
         mx = _mx;
         //elindítja a játékot úgy, hogy a MainPanel start vátozóját 1-re állítja
-        JButton start = new JButton("start");
+        //csak akkor lehet állítani a szabályokon, ha nem fut a szimuláció, így a start ezt blokkolja
         start.addActionListener(new startListener());
         this.add(start);
 
         //leállítja a játékot úgy, hogy a MainPanel start változóját 0-ra állítja
-        JButton stop = new JButton("stop");
         stop.addActionListener(new stopListener());
         this.add(stop);
 
@@ -48,7 +52,6 @@ public class ControlPanel extends JPanel {
         this.add(random);
 
         //kiolvassa a bs textfieldnek az értékét és beteszi az értékeket a MainPanel s és b listájába
-        JButton bs= new JButton("set bs");
         bs.addActionListener(new bsListener());
         this.add(bs);
 
@@ -62,6 +65,7 @@ public class ControlPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             MainPanel.running = 1;
+            GameFrame.bs.setEnabled(false);
             System.out.println("start");
         }
 
@@ -95,6 +99,7 @@ public class ControlPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             MainPanel.running = 0;
+            GameFrame.bs.setEnabled(true);
             System.out.println("stop");
 
         }
@@ -136,14 +141,13 @@ public class ControlPanel extends JPanel {
     static class saveListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            ArrayList<ArrayList<cell>> finalMx = mx;
             ArrayList<ArrayList<Integer>> values = new ArrayList<>();
             for(int i = 0; i < GamePanel.SIZE; i++) {
                 values.add(i, new ArrayList<>());
                 for (int j = 0; j < GamePanel.SIZE; j++)
                     values.get(i).add(j, mx.get(i).get(j).aliveStatus());
             }
-            FileWriter writer = null;
+            FileWriter writer;
             try {
                 writer = new FileWriter("table.json");
                 gson.toJson(values, writer);

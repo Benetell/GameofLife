@@ -13,7 +13,7 @@ public class MainPanel extends JPanel implements Runnable{
     public static int random = 0;
     public static ArrayList<Integer> b = new ArrayList<>();
     public static ArrayList<Integer> s = new ArrayList<>();
-    private Thread gameThread;
+    public static Thread gameThread;
     public static ArrayList<ArrayList<cell>> mx;
     /*
     inicializálja a b és s listákat (az alapjáték b/s rate-je 3/23
@@ -49,11 +49,8 @@ public class MainPanel extends JPanel implements Runnable{
                     random = 0;
                 }
             }
-            //csak akkor lehet állítani a szabályokon, ha nem megy a szimuláció
-            GameFrame.bs.setEnabled(true);
             //elindul a szimuláció is
             if(running == 1) {
-                GameFrame.bs.setEnabled(false);
                 //elmenti a pastmxba az éppen aktuális állapotot, mert az alapján kell meghatározni a következő állapotot
                 GamePanel.createMX(GameFrame.pastmx);
                 for(int row = 0; row<GamePanel.SIZE; row++){
