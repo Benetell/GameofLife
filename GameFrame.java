@@ -11,6 +11,7 @@ import javax.swing.border.Border;
     egy custom JFrame osztály, ami megvalósítja a UI-t
  */
 public class GameFrame extends JFrame{
+
     static JMenuBar mb;
 
     static JMenu x;
@@ -21,7 +22,7 @@ public class GameFrame extends JFrame{
     public static ArrayList<ArrayList<cell>> pastmx = new ArrayList<>();
     public static JTextField bs = new JTextField("B/S rate",15);
 
-    public static JTextPane speed = new JTextPane();
+    public static JLabel speed = new JLabel();
     public static JComboBox jcb;
 //harom osztaly 10 fuggvenye teszt
 
@@ -29,8 +30,9 @@ public class GameFrame extends JFrame{
     létrehozza a paneleket, egy MainPanelbe teszi őket és azt hozzáadja a framehez
      */
     public GameFrame(ArrayList<ArrayList<cell>> _mx){
+        speed.setText("speed: "+ MainPanel.viewSpeed);
         mx=_mx;
-
+        //speed.setEnabled(false);
         //menubar a mentésnek és a betöltésnek
         mb = new JMenuBar();
         x = new JMenu("menu");
@@ -51,13 +53,13 @@ public class GameFrame extends JFrame{
         jcb = new JComboBox(choices);
         jcb.addActionListener(e -> {
             if(e.getSource()==jcb) {
-                if (jcb.getSelectedIndex() == 1) speed.setText("speed: " + MainPanel.speed);
+                if (jcb.getSelectedIndex() == 1) speed.setText("sleep: " + MainPanel.speed);
                 if (jcb.getSelectedIndex() == 0) speed.setText("speed: " + MainPanel.viewSpeed);
             }
         });
-        info.add(bs,BorderLayout.WEST);
-        info.add(speed, BorderLayout.CENTER);
-        info.add(jcb, BorderLayout.EAST);
+        info.add(bs,BorderLayout.EAST);
+        info.add(speed, BorderLayout.WEST);
+        info.add(jcb, BorderLayout.NORTH);
 
         //control panel
         JPanel control = new ControlPanel (mx);

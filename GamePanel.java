@@ -11,6 +11,13 @@ public class GamePanel extends JPanel{
 
     public static int SIZE = 30;
     static ArrayList<ArrayList<cell>> mx = new ArrayList<>();
+
+    //ne legyen a mátrixméret 0 alatti vagy 100x100nál nagyobb
+    static public void setSIZE(int s){
+        SIZE = s;
+        //ne legyen a mátrixméret 0 alatti vagy 100x100nál nagyobb
+        if(s>100 || s<3) SIZE = 100;
+    }
     /*
     létrehozza a cell mátrixot és megjeleníti
      */

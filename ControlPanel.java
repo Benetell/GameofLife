@@ -18,31 +18,31 @@ public class ControlPanel extends JPanel {
     static Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
     static ArrayList<ArrayList<cell>> mx;
-
     public static JButton faster = new JButton("faster");
+    public static JButton slower = new JButton("slower");
     public static JButton bs= new JButton("set bs");
     public static JButton start = new JButton("start");
-
     public static JButton stop = new JButton("stop");
 
     public ControlPanel(ArrayList<ArrayList<cell>> _mx) {
         mx = _mx;
-        //elindítja a játékot úgy, hogy a MainPanel start vátozóját 1-re állítja
+        //elindítja a játékot úgy, hogy a MainPanel start vátozóját 1-re állítja és magát kikapcsolja
         //csak akkor lehet állítani a szabályokon, ha nem fut a szimuláció, így a start ezt blokkolja
         start.addActionListener(new startListener());
         this.add(start);
 
-        //leállítja a játékot úgy, hogy a MainPanel start változóját 0-ra állítja
+        //leállítja a játékot úgy, hogy a MainPanel start változóját 0-ra állítja és engedélyezi a start gombot
         stop.addActionListener(new stopListener());
         this.add(stop);
 
         //csökkenti a MainPanel speed változóját, amivel gyorsulni fog a szimuláció és a növeli a viewSpeed változó értékét,
-        // hogy ne legyen konraintuitív a sebesség a felhasználónak
+        // hogy ne legyen kontraintuitív a sebesség a felhasználónak
+        //ha elérte a maximális sebességet kikapcsolja magát, a slowert pedig engedélyezi
         faster.addActionListener(new fasterListener());
         this.add(faster);
 
         //növeli a MainPanel speed változóját, amivel lassulni fog a szimuláció és csökkenti a viewSpeed változó értékét
-        JButton slower = new JButton("slower");
+        //ha elérte a minimális sebességet kikapcsolja magát, a fastert pedig engedélyezi
         slower.addActionListener(new slowerListener());
         this.add(slower);
 
@@ -64,9 +64,21 @@ public class ControlPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            start.setEnabled(false);
             MainPanel.running = 1;
             GameFrame.bs.setEnabled(false);
-            System.out.println("start");
+        }
+
+    }
+    static class stopListener implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            MainPanel.running = 0;
+            GameFrame.bs.setEnabled(true);
+            if(!start.isEnabled())
+                start.setEnabled(true);
+
         }
 
     }
@@ -94,39 +106,35 @@ public class ControlPanel extends JPanel {
         }
 
     }
-    static class stopListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            MainPanel.running = 0;
-            GameFrame.bs.setEnabled(true);
-            System.out.println("stop");
-
-        }
-
-    }
     static class fasterListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if(MainPanel.speed>50) {
+                System.out.println(MainPanel.speed + " " + GameFrame.speed.getText());
                 MainPanel.speed -= 50;
                 MainPanel.viewSpeed += 50;
             }else{
                 faster.setEnabled(false);
             }
-            if (GameFrame.jcb.getSelectedIndex() == 1) GameFrame.speed.setText("speed: " + MainPanel.speed);
+            if(!slower.isEnabled())
+                slower.setEnabled(true);
+            if (GameFrame.jcb.getSelectedIndex() == 1) GameFrame.speed.setText("sleep: " + MainPanel.speed);
             if (GameFrame.jcb.getSelectedIndex() == 0) GameFrame.speed.setText("speed: " + MainPanel.viewSpeed);
         }
     }
     static class slowerListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
+            if(MainPanel.speed<950) {
                 MainPanel.speed += 50;
-            MainPanel.viewSpeed -= 50;
+                MainPanel.viewSpeed -= 50;
+            }else{
+                slower.setEnabled(false);
+            }
             if(!faster.isEnabled()) {
                 faster.setEnabled(true);
             }
-            if (GameFrame.jcb.getSelectedIndex() == 1) GameFrame.speed.setText("speed: " + MainPanel.speed);
+            if (GameFrame.jcb.getSelectedIndex() == 1) GameFrame.speed.setText("sleep: " + MainPanel.speed);
             if (GameFrame.jcb.getSelectedIndex() == 0) GameFrame.speed.setText("speed: " + MainPanel.viewSpeed);
 
         }

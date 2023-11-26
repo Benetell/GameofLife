@@ -31,19 +31,19 @@ public class cell extends JButton {
                 this.setBackground(Color.white);
                 break;
             case "gray1":
-                this.setBackground(new Color(179, 179, 179));
+                this.setBackground(new Color(229, 15, 15));
                 break;
              case "gray2":
-                    this.setBackground(new Color(134, 134, 134));
+                    this.setBackground(new Color(225, 10, 214));
                     break;
              case "gray3":
-                    this.setBackground(new Color(115, 115, 115));
+                    this.setBackground(new Color(61, 21, 206));
                     break;
              case "gray4":
-                    this.setBackground(new Color(77, 77, 77));
+                    this.setBackground(new Color(27, 222, 199));
                     break;
              case "gray6":
-                    this.setBackground(new Color(38,38,38));
+                    this.setBackground(new Color(181, 243, 58));
                     break;
         }
     }

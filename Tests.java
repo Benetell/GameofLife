@@ -29,10 +29,12 @@ public class Tests {
     }
     @Test
     public void jcbTest(){
-           ControlPanel.faster.doClick();
-           assertEquals("speed modban jol reagal a fasterre", "speed: 50", GameFrame.speed.getText());
-           GameFrame.jcb.setSelectedItem("sleep");
-           assertEquals("sleep modban jol reagal a fasterre", "speed: 450", GameFrame.speed.getText());
+        MainPanel.speed = 500;
+        assertEquals("speed modban jol reagal a fasterre", "speed: 0", GameFrame.speed.getText());
+        ControlPanel.faster.doClick();
+        assertEquals("speed modban jol reagal a fasterre", "speed: 50", GameFrame.speed.getText());
+        GameFrame.jcb.setSelectedItem("sleep");
+        assertEquals("sleep modban jol reagal a fasterre", "sleep: 450", GameFrame.speed.getText());
 
     }
 
@@ -40,45 +42,65 @@ public class Tests {
     public void neighbourTestDuringRun(){
         mx.get(0).get(5).doClick();
         ControlPanel.start.doClick();
-        assertEquals("",1,mx.get(0).get(5).aliveStatus());
-        assertEquals("",1,mx.get(0).get(4).countNeighbours(mx));
+        assertEquals("kattintassal 1es allapotba all",1,mx.get(0).get(5).aliveStatus());
+        assertEquals("jol szamolja az elozo korbol az ujat",1,mx.get(0).get(4).countNeighbours(mx));
         ControlPanel.stop.doClick();
     }
     @Test
     public void szabalymodositasJatekAlatt(){
         ControlPanel.start.doClick();
-        assertFalse("futas alatt allitani",GameFrame.bs.isEnabled());
+        assertFalse("nem lehet futas alatt allitani",GameFrame.bs.isEnabled());
         ControlPanel.stop.doClick();
-        assertTrue("futason kivul allitani",GameFrame.bs.isEnabled());
+        assertTrue("lehet futason kivul allitani",GameFrame.bs.isEnabled());
     }
     @Test
     public void maxspeed(){
-        assertTrue("gyorsitasni ha nem erte el a maximumot",ControlPanel.faster.isEnabled());
+        MainPanel.speed = 500;
+        assertTrue("lehet gyorsitasni ha nem erte el a maximumot",ControlPanel.faster.isEnabled());
         MainPanel.speed = 50;
         ControlPanel.faster.doClick();
-        assertFalse("gyorsitani ha eletre a maximumot",ControlPanel.faster.isEnabled());
+        assertFalse("nem lehet gyorsitani ha elerte a maximumot",ControlPanel.faster.isEnabled());
     }
 
+    @Test
+    public void minspeed(){
+        assertTrue(" lehet lassitani ha nem elerte a minimumot",ControlPanel.slower.isEnabled());
+        MainPanel.speed = 950;
+        ControlPanel.slower.doClick();
+        assertFalse("nem lehet lassitani ha elerte a minimumot",ControlPanel.slower.isEnabled());
+    }
     @Test
     public void neighbourTestOneCell(){
         ArrayList<ArrayList<cell>> _mx = new ArrayList<>();
         _mx.add(new ArrayList<>());
         _mx.get(0).add(new cell(0,0));
-        assertEquals("",0,_mx.get(0).get(0).countNeighbours(_mx));
+        assertEquals("szomszedok nelkul nem dob hibat a szomszed szamlalas",0,_mx.get(0).get(0).countNeighbours(_mx));
     }
 
     @Test
     public void serializationTest() throws IOException {
+        GamePanel.setSIZE(30);
         String s = "[[0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]";
         mx.get(0).get(1).doClick();
         GameFrame.save.doClick();
         BufferedReader br = new BufferedReader(new FileReader("table.json"));
-        assertEquals("",br.readLine(),s);
+        assertEquals("megfelelo formatumban hozza letre a jsont",br.readLine(),s);
         br.close();
     }
 
     @Test
-    public void borderTest() {
+    public void sizeTest() {
+        GamePanel.setSIZE(101);
+        assertEquals("tulmeretezesnel 100 a meret", GamePanel.SIZE,100);
+        GamePanel.setSIZE(0);
+        assertEquals("alulmeretezesnel 100 a meret", GamePanel.SIZE,100);
+    }
 
+    @Test
+    public void startTest(){
+        assertTrue("kattintható a start ha nem fut",ControlPanel.start.isEnabled());
+        ControlPanel.start.doClick();
+        assertFalse("nem kattinthato a start ha fut",ControlPanel.slower.isEnabled());
+        ControlPanel.stop.doClick();
     }
 }

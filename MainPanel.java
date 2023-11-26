@@ -40,7 +40,8 @@ public class MainPanel extends JPanel implements Runnable{
     public void run() {
         //amíg fut a szál
         while(gameThread!=null) {
-            //a random gomb megnyumásával ez az érték 1-re vált és létrejön egy random mátrix
+
+            //a random gomb megnyomásával ez az érték 1-re vált és létrejön egy random mátrix
             if(random == 1){
                 for(int row = 0; row<GamePanel.SIZE; row++){
                     for(int col = 0; col<GamePanel.SIZE; col++){
