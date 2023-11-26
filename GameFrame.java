@@ -9,7 +9,6 @@ import javax.swing.border.Border;
 
 /*
     egy custom JFrame osztály, ami megvalósítja a UI-t
-    tartalmaz:
  */
 public class GameFrame extends JFrame{
     static JMenuBar mb;
@@ -24,12 +23,15 @@ public class GameFrame extends JFrame{
 
     public static JTextPane speed = new JTextPane();
     public static JComboBox jcb;
-
-
-    public GameFrame(ArrayList<ArrayList<cell>> _mx){
-        speed.setText("speed: "+MainPanel.viewSpeed);
 //harom osztaly 10 fuggvenye teszt
+
+    /*
+    létrehozza a paneleket, egy MainPanelbe teszi őket és azt hozzáadja a framehez
+     */
+    public GameFrame(ArrayList<ArrayList<cell>> _mx){
         mx=_mx;
+
+        //menubar a mentésnek és a betöltésnek
         mb = new JMenuBar();
         x = new JMenu("menu");
         save = new JMenuItem("save");
@@ -41,15 +43,9 @@ public class GameFrame extends JFrame{
         mb.add(x);
         this.setJMenuBar(mb);
 
-        this.setSize(800,800);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        //felső panel a born/survive rate beállításához, a speed labelhez és annak a mértékegységéhez
+        speed.setText("speed: "+MainPanel.viewSpeed);
         JPanel info = new JPanel();
-        GamePanel grid = new GamePanel(mx);
-        JPanel control = new ControlPanel (mx);
-        main = new MainPanel(mx);
-
         info.setLayout(new BorderLayout());
         String[] choices = {"speed","sleep"};
         jcb = new JComboBox(choices);
@@ -63,17 +59,29 @@ public class GameFrame extends JFrame{
         info.add(speed, BorderLayout.CENTER);
         info.add(jcb, BorderLayout.EAST);
 
-
+        //control panel
+        JPanel control = new ControlPanel (mx);
         control.setLayout(new GridLayout(2,2));
+
+        //game panel
+        GamePanel grid = new GamePanel(mx);
+
+        //main panel
+        main = new MainPanel(mx);
         main.setLayout(new BorderLayout());
         main.add(info,BorderLayout.NORTH);
         main.add(grid,BorderLayout.CENTER);
         main.add(control,BorderLayout.SOUTH);
+
+        //frame beállításai
         this.add(main);
+        this.setSize(800,800);
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
+    //ezzel készíti elő a frame a MainPanelbeli szálat
     public void start(){
-
         main.startThread();
     }
 

@@ -12,7 +12,9 @@ import com.google.gson.GsonBuilder;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-
+/*
+ez a panel tartalmazza a gombokat és az actionListenereket
+ */
 public class ControlPanel extends JPanel {
     static Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
@@ -20,25 +22,32 @@ public class ControlPanel extends JPanel {
     public static JButton faster = new JButton("faster");
     public ControlPanel(ArrayList<ArrayList<cell>> _mx) {
         mx = _mx;
+        //elindítja a játékot úgy, hogy a MainPanel start vátozóját 1-re állítja
         JButton start = new JButton("start");
         start.addActionListener(new startListener());
         this.add(start);
 
+        //leállítja a játékot úgy, hogy a MainPanel start változóját 0-ra állítja
         JButton stop = new JButton("stop");
         stop.addActionListener(new stopListener());
         this.add(stop);
 
+        //csökkenti a MainPanel speed változóját, amivel gyorsulni fog a szimuláció és a növeli a viewSpeed változó értékét,
+        // hogy ne legyen konraintuitív a sebesség a felhasználónak
         faster.addActionListener(new fasterListener());
         this.add(faster);
 
+        //növeli a MainPanel speed változóját, amivel lassulni fog a szimuláció és csökkenti a viewSpeed változó értékét
         JButton slower = new JButton("slower");
         slower.addActionListener(new slowerListener());
         this.add(slower);
 
+        //random életre kelt gombokat a MainPanel random változójának 1-esre állításával
         JButton random= new JButton("random");
         random.addActionListener(new randomListener());
         this.add(random);
 
+        //kiolvassa a bs textfieldnek az értékét és beteszi az értékeket a MainPanel s és b listájába
         JButton bs= new JButton("set bs");
         bs.addActionListener(new bsListener());
         this.add(bs);
