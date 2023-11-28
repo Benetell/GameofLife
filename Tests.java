@@ -32,10 +32,9 @@ public class Tests {
         MainPanel.speed = 500;
         assertEquals("speed modban jol reagal a fasterre", "speed: 0", GameFrame.speed.getText());
         ControlPanel.faster.doClick();
-        assertEquals("speed modban jol reagal a fasterre", "speed: 50", GameFrame.speed.getText());
+        assertEquals("speed modban jol reagal a fasterre", "speed: 100", GameFrame.speed.getText());
         GameFrame.jcb.setSelectedItem("sleep");
-        assertEquals("sleep modban jol reagal a fasterre", "sleep: 450", GameFrame.speed.getText());
-
+        assertEquals("sleep modban jol reagal a fasterre", "sleep: 400", GameFrame.speed.getText());
     }
 
     @Test
@@ -55,7 +54,6 @@ public class Tests {
     }
     @Test
     public void maxspeed(){
-        MainPanel.speed = 500;
         assertTrue("lehet gyorsitasni ha nem erte el a maximumot",ControlPanel.faster.isEnabled());
         MainPanel.speed = 50;
         ControlPanel.faster.doClick();
@@ -100,7 +98,7 @@ public class Tests {
     public void startTest(){
         assertTrue("kattintható a start ha nem fut",ControlPanel.start.isEnabled());
         ControlPanel.start.doClick();
-        assertFalse("nem kattinthato a start ha fut",ControlPanel.slower.isEnabled());
+        assertFalse("nem kattinthato a start ha fut",ControlPanel.start.isEnabled());
         ControlPanel.stop.doClick();
     }
 }

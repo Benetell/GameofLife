@@ -87,7 +87,6 @@ public class ControlPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             String text = GameFrame.bs.getText();
-            System.out.println(text);
             if(text.equals( "B/S rate")) return;
             MainPanel.b.clear();
             MainPanel.s.clear();
@@ -110,7 +109,6 @@ public class ControlPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             if(MainPanel.speed>50) {
-                System.out.println(MainPanel.speed + " " + GameFrame.speed.getText());
                 MainPanel.speed -= 50;
                 MainPanel.viewSpeed += 50;
             }else{
